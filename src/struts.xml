@@ -8,4 +8,5 @@
 	<include file="/config/common-struts.xml"></include>
 	<include file="/config/system-struts.xml"></include>
 	<include file="/config/app-struts.xml"></include>
+	<include file="/config/wechat-struts.xml"></include>
 </struts>

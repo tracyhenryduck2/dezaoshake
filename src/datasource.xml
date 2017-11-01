@@ -10,9 +10,9 @@
 		<password>zhetian@12378900</password>
 		 --> 
 		 
-		<driver-url>jdbc:mysql://localhost:3306/dezaoshake?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;failOverReadOnly=false</driver-url>
+		<driver-url>jdbc:mysql://112.33.1.143:3306/dezaoshake?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;failOverReadOnly=false</driver-url>
 		<user>root</user>
-		<password></password>
+		<password>zhouxin</password>
 		<!--
 		 <driver-url>jdbc:mysql://zed1.cn:3306/weixin?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;failOverReadOnly=false</driver-url>
 		<user>root</user>
