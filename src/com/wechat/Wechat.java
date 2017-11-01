@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import com.bean.StaticBean;
 import com.common.BaseActionSupport;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -30,18 +32,21 @@ public class Wechat extends BaseActionSupport{
 	 * @return
 	 */
 	public void Login(){
-		
 		String code = request.getParameter("code");
         Map<String, String> data = new HashMap<String, String>();
         Map<String, String> result = getUserInfoAccessToken(code);//通过这个code获取access_token
         String openId = result.get("openid");
         if (StringUtils.isNotEmpty(openId)) {
-            logger.info("try getting user info. [openid={}]", openId);
-            Map<String, String> userInfo = wechatUtils.getUserInfo(result.get("access_token"), openId);//使用access_token获取用户信息
-            logger.info("received user info. [result={}]", userInfo);
-            return forward("auth", userInfo);
+        	System.out.println("try getting user info. [openid="+openId+"]");
+            Map<String, String> userInfo = getUserInfo(result.get("access_token"), openId);//使用access_token获取用户信息
+            System.out.println("received user info. [result="+userInfo+"]");
+            outPrintJSONObject(userInfo);
+        }else{
+            Map<String, String> userInfo = new HashMap<String,String>();//使用access_token获取用户信息
+            userInfo.put("openid", "empty");
+            outPrintJSONObject(userInfo);
         }
-        return Response.ok("openid为空").build();
+        
 		
 	}
 	
@@ -58,7 +63,7 @@ public class Wechat extends BaseActionSupport{
         Map<String, String> data = new HashMap<String, String>();
         try {
             String url = String.format("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code",
-                                       APPID, APPSECRET, code);
+            		StaticBean.WECHAT_APPID, StaticBean.WECHAT_SECRET, code);
             System.out.println("request accessToken from url: "+url);
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet(url);
