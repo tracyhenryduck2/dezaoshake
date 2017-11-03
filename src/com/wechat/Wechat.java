@@ -31,22 +31,23 @@ public class Wechat extends BaseActionSupport{
 	 * http://SERVER[:PORT]/PROJECTNAME/Wechat!Login.action
 	 * @return
 	 */
-	public void Login(){
-		String code = request.getParameter("code");
-        Map<String, String> data = new HashMap<String, String>();
-        Map<String, String> result = getUserInfoAccessToken(code);//通过这个code获取access_token
-        String openId = result.get("openid");
-        if (StringUtils.isNotEmpty(openId)) {
-        	System.out.println("try getting user info. [openid="+openId+"]");
-            Map<String, String> userInfo = getUserInfo(result.get("access_token"), openId);//使用access_token获取用户信息
-            System.out.println("received user info. [result="+userInfo+"]");
-            outPrintJSONObject(userInfo);
-        }else{
-            Map<String, String> userInfo = new HashMap<String,String>();//使用access_token获取用户信息
-            userInfo.put("openid", "empty");
-            outPrintJSONObject(userInfo);
-        }
-        
+	public String Login(){
+//		String code = request.getParameter("code");
+//        Map<String, String> data = new HashMap<String, String>();
+//        Map<String, String> result = getUserInfoAccessToken(code);//通过这个code获取access_token
+//        String openId = result.get("openid");
+//        if (StringUtils.isNotEmpty(openId)) {
+//        	System.out.println("try getting user info. [openid="+openId+"]");
+//            Map<String, String> userInfo = getUserInfo(result.get("access_token"), openId);//使用access_token获取用户信息
+//            System.out.println("received user info. [result="+userInfo+"]");
+//            outPrintJSONObject(userInfo);
+//        }else{
+//            Map<String, String> userInfo = new HashMap<String,String>();//使用access_token获取用户信息
+//            userInfo.put("openid", "empty");
+//            outPrintJSONObject(userInfo);
+//        }
+//        
+		return "success";
 		
 	}
 	

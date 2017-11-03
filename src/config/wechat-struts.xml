@@ -9,6 +9,10 @@
    <!--  <constant name="struts.devMode" value="false" /> -->
 		<package name="wechat" extends="struts-default" namespace="/">
 		    <action name="Wechat" class="com.wechat.Wechat">
+				<result name="success">/index_prize.jsp</result>
            </action>
+           
 		</package>
+		
+		
 </struts>
