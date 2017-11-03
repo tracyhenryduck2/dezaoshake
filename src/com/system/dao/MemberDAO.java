@@ -50,5 +50,12 @@ public class MemberDAO extends BaseDAO {
     	page.setTotalRows(j.queryForInteger("select count(*) from member a "+sqlWhere, pram));
     	List<Map<String,Object>> list=j.queryForPageList(sql, page.getPageNo(),page.getPageSize(),pram);  
     	return list;      
-    }                   
+    }
+    
+    
+     public Map<String,Object> getUserId(String openid){
+    	 String sql = "select * from member where openid = ?";
+    	 Object[] ds = {openid};
+    	 return j.queryForMap(sql, ds);
+     }
 }                       

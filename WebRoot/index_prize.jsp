@@ -29,7 +29,7 @@ String path = request.getContextPath();
 
         <canvas class="item" id="a_g" width="300" height="300" ng-click="Index.test()"></canvas>
               <script type="text/javascript">
-
+            var user =  ${user};
             window.onload = function() {
                 /**
                  * 说明

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sf.json.JSONObject;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -15,6 +17,8 @@ import com.bean.StaticBean;
 import com.common.BaseActionSupport;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.system.bean.MemberBean;
+import com.system.dao.MemberDAO;
 
 public class Wechat extends BaseActionSupport{
 	private static final String LOGIN = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_userinfo&state=#wechat_redirect";
@@ -25,29 +29,35 @@ public class Wechat extends BaseActionSupport{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+	private MemberDAO memberdao = new MemberDAO();
 	
 	/**
 	 * http://SERVER[:PORT]/PROJECTNAME/Wechat!Login.action
 	 * @return
 	 */
 	public String Login(){
-//		String code = request.getParameter("code");
-//        Map<String, String> data = new HashMap<String, String>();
-//        Map<String, String> result = getUserInfoAccessToken(code);//通过这个code获取access_token
-//        String openId = result.get("openid");
-//        if (StringUtils.isNotEmpty(openId)) {
-//        	System.out.println("try getting user info. [openid="+openId+"]");
-//            Map<String, String> userInfo = getUserInfo(result.get("access_token"), openId);//使用access_token获取用户信息
-//            System.out.println("received user info. [result="+userInfo+"]");
-//            outPrintJSONObject(userInfo);
-//        }else{
-//            Map<String, String> userInfo = new HashMap<String,String>();//使用access_token获取用户信息
-//            userInfo.put("openid", "empty");
-//            outPrintJSONObject(userInfo);
-//        }
-//        
-		return "success";
+		String code = request.getParameter("code");
+        Map<String, String> data = new HashMap<String, String>();
+        Map<String, String> result = getUserInfoAccessToken(code);//通过这个code获取access_token
+        String openId = result.get("openid");
+        if (StringUtils.isNotEmpty(openId)) {
+        	System.out.println("try getting user info. [openid="+openId+"]");
+            Map<String, String> userInfo = getUserInfo(result.get("access_token"), openId);//使用access_token获取用户信息
+            System.out.println("received user info. [result="+userInfo+"]");
+            Map<String,Object> d = memberdao.getUserId(result.get("access_token"));
+            
+            if(d==null){
+            	return "success";
+            }else{
+        		JSONObject rootObject = JSONObject.fromObject(d);
+                request.setAttribute("user", rootObject);
+        		return "success";
+            }
+
+        }else{
+        	return "failed";
+        }
+
 		
 	}
 	
