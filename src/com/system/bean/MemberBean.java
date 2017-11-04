@@ -1,39 +1,52 @@
 package com.system.bean;
 
+import java.util.Map;
+
 import com.avatar.db.annotation.*;
 import com.common.*;
 
 /**
  * 成员表
- * @author xin.chou
+ * @author jj.xue
  *
  */
 @Table(name="member")
 public class MemberBean {
-
 	/**
 	 *  
 	*/
-	@Column(name="Id",primaryKey=true,generatorType=GeneratorType.AUTO_INCREMENT)
+	@Column(name="id",primaryKey=true,generatorType=GeneratorType.AUTO_INCREMENT)
 	private Long id;
 
 	/**
 	 * 用户名 
 	*/
-	@Column(name="username")
-	private String username;
+	@Column(name="nickname")
+	private String nickname;
 
 	/**
-	 * 公司 
+	 * 省份 
 	*/
-	@Column(name="company")
-	private String company;
+	@Column(name="province")
+	private String province;
 
 	/**
-	 * 职位 
+	 * 城市 
 	*/
-	@Column(name="position")
-	private String position;
+	@Column(name="city")
+	private String city;
+
+	/**
+	 * 头像 
+	*/
+	@Column(name="headimgurl")
+	private String headimgurl;
+
+	/**
+	 * openid 
+	*/
+	@Column(name="openid")
+	private String openid;
     	
     /** 
      * 
@@ -55,47 +68,79 @@ public class MemberBean {
      * 用户名
      * @return 
      */ 
-    public String getUsername() {
-    	return username;
+    public String getNickname() {
+    	return nickname;
     }
     
     /** 
      * 用户名
      * @param 
      */ 
-    public void setUsername(String username) {
-    	this.username = username;
+    public void setNickname(String nickname) {
+    	this.nickname = nickname;
     }
     	
     /** 
-     * 公司
+     * 省份
      * @return 
      */ 
-    public String getCompany() {
-    	return company;
+    public String getProvince() {
+    	return province;
     }
     
     /** 
-     * 公司
+     * 省份
      * @param 
      */ 
-    public void setCompany(String company) {
-    	this.company = company;
+    public void setProvince(String province) {
+    	this.province = province;
     }
     	
     /** 
-     * 职位
+     * 城市
      * @return 
      */ 
-    public String getPosition() {
-    	return position;
+    public String getCity() {
+    	return city;
     }
     
     /** 
-     * 职位
+     * 城市
      * @param 
      */ 
-    public void setPosition(String position) {
-    	this.position = position;
+    public void setCity(String city) {
+    	this.city = city;
+    }
+    	
+    /** 
+     * 头像
+     * @return 
+     */ 
+    public String getHeadimgurl() {
+    	return headimgurl;
+    }
+    
+    /** 
+     * 头像
+     * @param 
+     */ 
+    public void setHeadimgurl(String headimgurl) {
+    	this.headimgurl = headimgurl;
+    }
+    	
+    /** 
+     * openid
+     * @return 
+     */ 
+    public String getOpenid() {
+    	return openid;
+    }
+    
+    /** 
+     * openid
+     * @param 
+     */ 
+    public void setOpenid(String openid) {
+    	this.openid = openid;
     }
 }

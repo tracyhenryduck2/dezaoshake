@@ -1,6 +1,5 @@
 package com.system.action;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.system.bean.MemberBean;
@@ -10,7 +9,7 @@ import com.common.BaseActionSupport;
 
 /**
  * 成员表
- * @author xin.chou
+ * @author jj.xue
  *
  */
 public class MemberAction extends BaseActionSupport {
@@ -65,7 +64,7 @@ public class MemberAction extends BaseActionSupport {
     public String addTest2(){
         showMessage = "编辑2"+tableDesc;
         String[] param={
-            "id","username","company","position"
+            "id","nickname","province","city","headimgurl","openid"
         };
         boolean result=dao.update(memberBean,param);
         if (result) { 
@@ -128,21 +127,6 @@ public class MemberAction extends BaseActionSupport {
     	request.setAttribute("list", list);   
     	return "list";    
     } 
-  
-    /**    
-     * 查询列表页面  
-     * @return  
-     */    
-    public void jsonlist() {
-    	page.execute(request, "ID", "desc");
-    	List<Map<String, Object>> list = dao.getPageList(page, memberBean);
-    	Map<String,Object> map = new HashMap<String,Object>();
-    	map.put("list", list);
-    	map.put("page", page);
-    	outPrintJSONObject(map);  
-    	   
-    } 
-    
  
     public MemberBean getMemberBean() { 
     	return memberBean;    

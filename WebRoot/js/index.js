@@ -127,7 +127,7 @@ var t;
 
         }).error(function(data,status,headers,config){
          if((status>=200&&status<300)||status===304||status===1223||status===0){
-         MyAlert("网络连接失败");
+           
          }
          });
   }

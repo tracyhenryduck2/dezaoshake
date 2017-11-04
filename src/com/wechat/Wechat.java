@@ -21,9 +21,6 @@ import com.system.bean.MemberBean;
 import com.system.dao.MemberDAO;
 
 public class Wechat extends BaseActionSupport{
-	private static final String LOGIN = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_userinfo&state=#wechat_redirect";
-	private static final String GETACCESSTOKENURL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
-	private static final String GETUSERINFOURL = "https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN";
 
 	/**
 	 * 
@@ -37,26 +34,38 @@ public class Wechat extends BaseActionSupport{
 	 */
 	public String Login(){
 		String code = request.getParameter("code");
-        Map<String, String> data = new HashMap<String, String>();
-        Map<String, String> result = getUserInfoAccessToken(code);//通过这个code获取access_token
-        String openId = result.get("openid");
-        if (StringUtils.isNotEmpty(openId)) {
-        	System.out.println("try getting user info. [openid="+openId+"]");
-            Map<String, String> userInfo = getUserInfo(result.get("access_token"), openId);//使用access_token获取用户信息
-            System.out.println("received user info. [result="+userInfo+"]");
-            Map<String,Object> d = memberdao.getUserId(result.get("access_token"));
-            
-            if(d==null){
-            	return "success";
-            }else{
-        		JSONObject rootObject = JSONObject.fromObject(d);
-                request.setAttribute("user", rootObject);
-        		return "success";
-            }
+        //Map<String, String> result = getUserInfoAccessToken(code);//通过这个code获取access_token
+        //String openId = result.get("openid");
+//        if (StringUtils.isNotEmpty(openId)) {
+//            Map<String, String> userInfo = getUserInfo(result.get("access_token"), openId);//使用access_token获取用户信息
+//            System.out.println("received user info. [result="+userInfo+"]");
+//            Map<String,Object> d = memberdao.getUserId(openId);
+//
+//            if(d==null){
+//                String nickname = userInfo.get("nickname");
+//                String province = userInfo.get("province");
+//                String city = userInfo.get("city");
+//                String headimgurl = userInfo.get("headimgurl");
+                MemberBean member = new MemberBean();
+                member.setNickname("张三");
+                member.setCity("宁波");
+                member.setProvince("浙江");
+                member.setHeadimgurl("123");
+                member.setOpenid("123");
+                Long userid = memberdao.save(member);
+                memberdao.inserMember(userid, 0l, 2l);
 
-        }else{
-        	return "failed";
-        }
+                request.setAttribute("user", JSONObject.fromObject(member));
+            	return "success";
+//            }else{
+//        		JSONObject rootObject = JSONObject.fromObject(d);
+//                request.setAttribute("user", rootObject);
+//        		return "success";
+//            }
+//
+//        }else{
+//        	return "failed";
+//        }
 
 		
 	}

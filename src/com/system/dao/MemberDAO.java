@@ -27,19 +27,27 @@ public class MemberDAO extends BaseDAO {
     	if(memberBean!=null) { 
     		if(memberBean.getId() != null) { 
     			objectList.add(memberBean.getId());
-    			sqlWhere += " AND a.Id = ? ";
+    			sqlWhere += " AND a.id = ? ";
     		} 
-    		if(memberBean.getUsername() != null && memberBean.getUsername().trim().length()>0) { 
-    			objectList.add(memberBean.getUsername());
-    			sqlWhere += " AND a.username = ? ";
+    		if(memberBean.getNickname() != null && memberBean.getNickname().trim().length()>0) { 
+    			objectList.add(memberBean.getNickname());
+    			sqlWhere += " AND a.nickname = ? ";
     		} 
-    		if(memberBean.getCompany() != null && memberBean.getCompany().trim().length()>0) { 
-    			objectList.add(memberBean.getCompany());
-    			sqlWhere += " AND a.company = ? ";
+    		if(memberBean.getProvince() != null && memberBean.getProvince().trim().length()>0) { 
+    			objectList.add(memberBean.getProvince());
+    			sqlWhere += " AND a.province = ? ";
     		} 
-    		if(memberBean.getPosition() != null && memberBean.getPosition().trim().length()>0) { 
-    			objectList.add(memberBean.getPosition());
-    			sqlWhere += " AND a.position = ? ";
+    		if(memberBean.getCity() != null && memberBean.getCity().trim().length()>0) { 
+    			objectList.add(memberBean.getCity());
+    			sqlWhere += " AND a.city = ? ";
+    		} 
+    		if(memberBean.getHeadimgurl() != null && memberBean.getHeadimgurl().trim().length()>0) { 
+    			objectList.add(memberBean.getHeadimgurl());
+    			sqlWhere += " AND a.headimgurl = ? ";
+    		} 
+    		if(memberBean.getOpenid() != null && memberBean.getOpenid().trim().length()>0) { 
+    			objectList.add(memberBean.getOpenid());
+    			sqlWhere += " AND a.openid = ? ";
     		} 
     	}                 
     	sql = sql + sqlWhere; 
@@ -53,9 +61,16 @@ public class MemberDAO extends BaseDAO {
     }
     
     
-     public Map<String,Object> getUserId(String openid){
-    	 String sql = "select * from member where openid = ?";
-    	 Object[] ds = {openid};
-    	 return j.queryForMap(sql, ds);
-     }
+    public Map<String,Object> getUserId(String openid){
+      	 String sql = "select * from member where openid = ?";
+      	 Object[] ds = {openid};
+      	 return j.queryForMap(sql, ds);
+       }
+    
+    public boolean inserMember(Long userid,Long sum,Long timeleft){
+    	String sql = "insert memberextended (userid,sum,timeleft) values(?,?,?)";
+    	Object[] params = {userid,sum,timeleft};
+    	return j.execute(sql, params);
+    	
+    }
 }                       
