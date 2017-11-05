@@ -50,5 +50,19 @@ public class PrizeconfDAO extends BaseDAO {
     	page.setTotalRows(j.queryForInteger("select count(*) from prizeconf a "+sqlWhere, pram));
     	List<Map<String,Object>> list=j.queryForPageList(sql, page.getPageNo(),page.getPageSize(),pram);  
     	return list;      
-    }                   
+    }     
+    
+    
+    public List<Map<String,Object>> getPrizeNameList(){
+    	String sql = "select name from prizeconf order by id";
+    	
+    	return j.queryForList(sql);
+    }
+    
+    
+    public Map<String,Object> getPrizeName(Long prizeid){
+    	String sql = "select name from prizeconf where id = "+prizeid;
+    	
+    	return j.queryForMap(sql);
+    }
 }                       

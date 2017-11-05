@@ -32,7 +32,7 @@ function getBranch(){
 
 function getPath()
 {
-	return client.getIpPort();
+	return "112.33.1.143:88";
 }
 function getFilePath()
 {

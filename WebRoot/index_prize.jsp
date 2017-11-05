@@ -20,9 +20,7 @@ String path = request.getContextPath();
 <body style="background:#ffed5d;" ng-controller="IndexController as Index">
 <div class="body">
   <!-- <div class="guangao"><img src="images/zhuanzhuan_01.png"  alt=""/></div> -->
-  <div class="logo"><img src="images/left_02.png" style="width:50px;float: left;"><img src="images/logo_02.png"  style="width:200px;" alt=""/><img src="images/right_02.png" style="width:50px;float: right;"><div class="imgRadius4_title" ng-show="Index.ads" ng-click="Index.login()">[登录]</div>
-<div ng-show="!Index.ads" class="imgRadius4_title ri" ng-click="Index.huan()">[兑换]</div>
-<div ng-show="!Index.ads" class="imgRadius4_title le" ng-click="Index.mine()"></div>
+  <div class="logo"><img src="images/left_02.png" style="width:50px;float: left;"><img src="images/logo_02.png"  style="width:200px;" alt=""/><img src="images/right_02.png" style="width:50px;float: right;">
   </div>
   <!--<div style="overflow-x:hidden;">--> 
     <div class="banner" id="ban">

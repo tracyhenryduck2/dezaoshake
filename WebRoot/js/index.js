@@ -78,19 +78,19 @@ var t;
     Index=this;
     model=Index;
     request=$http;
-    Index.ads = true;
+    Index.ads = false;
     Index.userlist=[{uname:"张三",phone:"13136369541",money:"123456"}];
     var c = document.getElementById("a_g");
-                Index.prizelist =('一等奖,二等奖,三等奖,谢谢').split(",");
-                t = new Turntable({
-                        "canvas"    : c, 
-                        "padding"   :18, 
-                        "background": "./images/Background.png", 
-                        "foreground": "./images/Foreground.png", 
-                        "p"         : "./images/P.png", 
-                        "items"     : Index.prizelist,
-                        "speed"     : 0.2
-                    });
+                // Index.prizelist =('一等奖,二等奖,三等奖,谢谢').split(",");
+                // t = new Turntable({
+                //         "canvas"    : c, 
+                //         "padding"   :18, 
+                //         "background": "./images/Background.png", 
+                //         "foreground": "./images/Foreground.png", 
+                //         "p"         : "./images/P.png", 
+                //         "items"     : Index.prizelist,
+                //         "speed"     : 0.2
+                //     });
 
 
  
@@ -107,10 +107,10 @@ var t;
 
 
     Index.loadprizelist=function(){
-
-      request.post('http://'+url+'/shake_bill/app/ShakeBill!getPriceList.action').success(function(data){
+    creatMask();
+      request.post('http://'+getPath()+'/dezaoshake/Wechat!getPrizeList.action').success(function(data){
         //alert(JSON.stringify(data));
-       if(data.errcode==110) {
+       if(data.errcode==8200000) {
                 Index.prizelist =(data.result+'谢谢').split(",");
                 t = new Turntable({
                         "canvas"    : c, 
@@ -123,7 +123,7 @@ var t;
                     });
        } 
 
-
+removeMask();
 
         }).error(function(data,status,headers,config){
          if((status>=200&&status<300)||status===304||status===1223||status===0){
@@ -134,82 +134,51 @@ var t;
 
 Index.test=function(){
  
-  var timesleft=null;
-  var obj=null;
-     if(Index.goingflag==true) return;  //防止转盘转动时多次抽奖的BUG
-
-  
-     // if(info==null || info=='')
-     // {
-     //     if(first==null || first=='')
-     //     {
-                    if (t.exec()) {
-                        var indexprize =  getIndex(Index.prizelist,'5元');
-                        console.log(indexprize);
-                         t.resp(indexprize, undefined, function() {MyAlert("恭喜您抽到5元电话费,请注册并登陆领取！","gotoResgiter()"); });
+   if(Index.ads == true) return;
+    Index.ads = true;
+      creatMask();
+          $http.post('http://'+getPath()+'/dezaoshake/Wechat!getPrize.action?id='+user.id).success(function(data){
+             removeMask();
+             console.log(data);
+            if(data.errcode==8400005)  //中奖
+            {     
+                          if (t.exec()) {
+                          var indexprize =  getIndex(Index.prizelist,data.name);
+                         t.resp(indexprize, undefined, function() {
+                        
+                          alert("恭喜您,"+data.name+",您还有"+(data.timeleft-1)+"次机会!");
+                          Index.ads = false;
+                          });
                      }
-     //     }
+            }
+            else if(data.errcode==8400001)  //未中奖
+            {
+                          if (t.exec()) {                            
+                         t.resp(Index.prizelist.length-1, undefined, function() {
 
- 
-     // }
-     // else
-     // {
-     //  creatMask();
-     //      $http.post('http://'+url+'/shake_bill/app/ShakeBill!getPrize.action').success(function(data){
-     //         removeMask();
+                          alert(data.errmsg.toString()+",您还有"+(data.timeleft-1)+"次机会!");
+                          Index.ads = false;
+                          });
+                     }
+            }
+            else 
+            {
+               alert(data.errmsg); 
+               Index.ads = false;
+            }
+          }).error(function(data,status,headers,config){
+             removeMask();
+           if((status>=200&&status<300)||status===304||status===1223||status===0){
+            Index.ads = false;
+           }
+           });
 
-     //        if(data.errcode==109)  //中奖
-     //        {     
-     //                      if (t.exec()) {
-     //                      Index.goingflag=true;
-     //                      var indexprize =  getIndex(Index.prizelist,data.prize.name);
-     //                     t.resp(indexprize, undefined, function() {
-     //                       Index.goingflag=false;
-     //                      var dsa = "";
-     //                      if(timesleft>1) dsa = "今天还可以再赚"+(timesleft-1)+"次！赶快试试运气吧！" 
-     //                      else            dsa = "今天没有抽奖次数了，明天还可以拿两次话费哦!";                               
-     //                      MyAlert("恭喜您抽到 "+data.prize.name.toString()+"电话费,"+dsa);
-     //                                var dsa = client.readGlobalInfo("username");
-     //                               var dsa2 = client.readGlobalInfo("password");  
-     //                               Index.login2(dsa,dsa2);
-                         
-     //                      });
-     //                 }
-     //        }
-     //        else if(data.errcode==108)  //未中奖
-     //        {
-     //                      if (t.exec()) {  
-     //                      Index.goingflag=true;                          
-     //                     t.resp(Index.prizelist.length-1, undefined, function() {
-     //                      Index.goingflag=false;
-     //                      var dsa = "";
-     //                      if(timesleft>1) dsa = ",今天还可以再赚"+(timesleft-1)+"次！赶快试试运气吧！" 
-     //                      else            dsa = ",今天没有抽奖次数了，明天还可以拿两次话费哦!"; 
-     //                               MyAlert(data.errmsg.toString()+dsa);
-     //                                var dsa = client.readGlobalInfo("username");
-     //                               var dsa2 = client.readGlobalInfo("password");  
-     //                               Index.login2(dsa,dsa2);
- 
-     //                      });
-     //                 }
-     //        }
-     //        else if(data.errcode==111)
-     //        {
-     //           MyAlert(data.errmsg.toString()+"，明天还可以拿两次话费哦!"); 
-     //        }
-     //      }).error(function(data,status,headers,config){
-     //         removeMask();
-     //       if((status>=200&&status<300)||status===304||status===1223||status===0){
-     //        MyAlert("网络连接失败");
-     //       }
-     //       });
-     // }
      
 
 
 }
 
-
+Index.loadprizelist();
 
   }]);
 })();

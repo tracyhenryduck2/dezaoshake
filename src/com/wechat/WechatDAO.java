@@ -38,4 +38,21 @@ public class WechatDAO extends BaseDAO {
     	
     	return id;
     }
+    
+    public boolean updatePrizeNum(Long userid,int timeleft){
+    	
+    	String sql = "update memberextended set timeleft =? where userid = ?";
+    	Object[] params = {timeleft,userid};
+    	
+    	return j.execute(sql, params);
+    	
+    }
+    
+    public boolean insertPrizeLog(Long userid,Long time,Long prizeid){
+    	String sql = "insert prize_log (userid,ctime,prizeid) values (?,?,?)";
+    	Object[] params = {userid,time,prizeid};
+    
+    	return j.execute(sql, params);
+    	
+    }
 }
