@@ -9,8 +9,10 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/common.css" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/cySearchBox.css" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/js/uploadify/uploadify.css" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/datePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery1.9.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/gdk.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/sort.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/ExtPrototype.js"></script>
