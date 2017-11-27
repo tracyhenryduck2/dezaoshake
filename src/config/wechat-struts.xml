@@ -13,6 +13,12 @@
            </action>
            
 		</package>
-		
+		<package name="wechat.pc" extends="login.interceptor" namespace="/">
+		   <action name="Comment" class="com.wechat.action.CommentAction">
+	 		<result name="toAddComment">/wechat/comment_edit.jsp</result>
+	 		<result name="list">/wechat/comment_list.jsp</result>
+	 		<result name="search">/wechat/comment_search.jsp</result>
+       </action>
+		</package>
 		
 </struts>

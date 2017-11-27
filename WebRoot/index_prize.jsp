@@ -1,5 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>  
-<%@ include file="/common/taglibs.jsp" %>  
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>   
 <%                                       
 String path = request.getContextPath();  
 %>                                       
@@ -9,8 +8,11 @@ String path = request.getContextPath();
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width,user-scalable=no"/>
 <title>摇奖</title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 <link href="css/css_mobile.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="css/tinyscrollbar.css" type="text/css"/>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/angular.min.js"></script>
 <script type="text/javascript" src="js/Turntable2.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
@@ -102,23 +104,23 @@ String path = request.getContextPath();
                      </div>
                       <div class="item-is">
                       <div class="item-name">课程评分</div>
-                       <div class="item-content"><input  class="edit" placeholder="点击输入" name="mileage" type="text"  required/></div>
+                       <div class="item-content"><input  class="edit" placeholder="点击输入" name="mileage" type="number"  required/></div>
                         <div class="clear"></div>
                      </div>
                      <div class="item-is">
                       <div class="item-name">体验感评分</div>
-                       <div class="item-content"><input  class="edit" placeholder="点击输入" name="mileage" type="text"  required/></div>
+                       <div class="item-content"><input  class="edit" placeholder="点击输入" name="mileage" type="number"  required/></div>
                         <div class="clear"></div>
                      </div>
                      <div class="item-is">
                       <div class="item-name">服务评分</div>
-                       <div class="item-content"><input  class="edit" placeholder="点击输入" name="mileage" type="text"  required/></div>
+                       <div class="item-content"><input  class="edit" placeholder="点击输入" name="mileage" type="number"  required/></div>
                         <div class="clear"></div>
                      </div>
                       <div class="item-is">
 
                       <div class="item-name">卫生评分</div>
-                       <div class="item-content"><input  class="edit" placeholder="点击输入" name="mileage" type="text"  required/></div>
+                       <div class="item-content"><input  class="edit" placeholder="点击输入" name="mileage" type="number"  required/></div>
                         <div class="clear"></div>
                      </div>
                       <div class="item-is">

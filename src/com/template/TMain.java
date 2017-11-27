@@ -12,11 +12,11 @@ public class TMain {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String packageName = "com.system";
+		String packageName = "com.wechat";
 		String[] pakageArr = packageName.split("\\.");
 		String folderName=pakageArr[pakageArr.length-1];
 		String schema="dezaoshake";
-		String tableName = "member";//fault_bill
+		String tableName = "comment";//fault_bill
 		String path = "d:\\work1\\template\\"+packageName;
 		File f = new File(path);
 		if(!f.exists()) {
