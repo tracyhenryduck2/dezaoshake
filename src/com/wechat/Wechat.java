@@ -23,6 +23,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.system.bean.MemberBean;
 import com.system.dao.MemberDAO;
+import com.wechat.bean.CommentBean;
+import com.wechat.dao.CommentDAO;
 import com.wechat.dao.PrizeconfDAO;
 
 public class Wechat extends BaseActionSupport{
@@ -34,7 +36,8 @@ public class Wechat extends BaseActionSupport{
 	private MemberDAO memberdao = new MemberDAO();
 	private PrizeconfDAO prizeconfdao = new PrizeconfDAO();
 	private WechatDAO wechatdao= new WechatDAO();
-	
+	private CommentBean commentbean = new CommentBean();
+	private CommentDAO commentdao = new CommentDAO();
 	/**
 	 * http://SERVER[:PORT]/PROJECTNAME/Wechat!play.action
 	 * @return
@@ -73,11 +76,8 @@ public class Wechat extends BaseActionSupport{
         }else{
         	return "failed";
         }
-
-		
+	
 	}
-	
-	
 	
 	 /**
      * 获取请求用户信息的access_token
@@ -230,4 +230,41 @@ public class Wechat extends BaseActionSupport{
 		
 		outPrintJSONObject(result);	
 	}
+	
+	/**
+	 * http://SERVER[:PORT]/PROJECTNAME/Wechat!commentsubmit.action
+	 * @return
+	 */
+	public String commentsubmit(){
+		
+        try {   
+            showMessage = "新增评论"; 
+            boolean result = true;  
+     
+            result = commentdao.insert(commentbean); 
+           
+            if (result) {
+            	Map<String,Object> user = memberdao.getUserInfoByid(commentbean.getId());
+            	request.setAttribute("user", JSONObject.fromObject(user));
+                
+                return "success"; 
+            } else {
+                showMessage += "失败";  
+                return error;   
+            }  
+        } catch (Exception e) {    
+            showMessage = "数据异常，操作失败";   
+            return error;  
+        } 
+		
+	}
+
+	public CommentBean getCommentbean() {
+		return commentbean;
+	}
+
+	public void setCommentbean(CommentBean commentbean) {
+		this.commentbean = commentbean;
+	}	
+	
 }

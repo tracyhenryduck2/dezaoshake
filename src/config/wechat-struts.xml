@@ -11,7 +11,6 @@
 		    <action name="Wechat" class="com.wechat.Wechat">
 				<result name="success">/index_prize.jsp</result>
            </action>
-           
 		</package>
 		<package name="wechat.pc" extends="login.interceptor" namespace="/">
 		   <action name="Comment" class="com.wechat.action.CommentAction">

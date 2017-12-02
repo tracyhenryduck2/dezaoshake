@@ -11,6 +11,7 @@ String path = request.getContextPath();
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 <link href="css/css_mobile.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="css/tinyscrollbar.css" type="text/css"/>
+<script type="text/javascript" src="js/gdk.js"></script>
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/angular.min.js"></script>
@@ -28,9 +29,9 @@ String path = request.getContextPath();
   
   .clear {clear:both;}
   .item-is {padding: 10px;border-bottom:1px solid #efe4e4;}
-  .item-name {width: 25%;float: left}
-  .item-content {width: 75%;float: left;}
-
+  .item-name {width: 25%;float: left;height: 28px;line-height: 28px}
+  .item-content {width: 70%;float: left;}
+  input.edit {margin-bottom: 0px;}
 </style>
 </head>
 <body style="background:#ffed5d;" ng-controller="IndexController as Index">
@@ -69,6 +70,33 @@ String path = request.getContextPath();
           	var b =parseInt(width)-300;
             document.getElementById("a_g").style.marginLeft=b/2+"px";
           }
+
+
+
+ var isCommit=false 
+  function save(){                        
+    if($("#form1").valid()) {           
+        if(isCommit==false){   
+         isCommit=true       
+      form1.submit();                     
+      }                 
+    }                                     
+  }  
+
+  function result(messageType, message){  
+    if(messageType=="error"){           
+      Dialog.error(message);              
+    } else if (messageType == "reload_success") {   
+      Dialog.alert(message,function(){    
+        Dialog.opener().location.reload(); //;= "<%=path%>/system/Member!list.action";   
+            
+      });                                 
+    } else if(messageType == "exception") { 
+                                          
+    }                                     
+  }
+
+
             </script>
   </div>
   <div class="zhongjian"><img src="images/zhongj.png" style="    width: 136px;" alt=""/><marquee    scrollamount="3"  direction="up"  class="imgRadius2_title">
@@ -81,7 +109,8 @@ String path = request.getContextPath();
 </button>
 <!-- 模态框（Modal） -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <form  id="form1" action="<%=path%>/Wechat!commentsubmit.action" class="modal-dialog">
+  <input type="hidden" name="commentbean.userid" value="1" />
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" 
@@ -95,37 +124,37 @@ String path = request.getContextPath();
 
         <div id="scrollbar1">
             <div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
-            <div class="viewport" style="background: #ff8a44;height:150px">
+            <div class="viewport" style="height:150px">
                  <div class="overview" id="notice" >
                      <div class="item-is">
                        <div class="item-name">真实姓名</div>
-                       <div class="item-content"><input  class="edit" placeholder="点击输入" name="mileage" type="text"  required/></div>
+                       <div class="item-content"><input  class="edit" placeholder="点击输入" name="commentbean.realname" type="text"  required/></div>
                        <div class="clear"></div>
                      </div>
                       <div class="item-is">
                       <div class="item-name">课程评分</div>
-                       <div class="item-content"><input  class="edit" placeholder="点击输入" name="mileage" type="number"  required/></div>
+                       <div class="item-content"><input  class="edit" placeholder="点击输入" name="commentbean.casepoint" type="number"  required/></div>
                         <div class="clear"></div>
                      </div>
                      <div class="item-is">
                       <div class="item-name">体验感评分</div>
-                       <div class="item-content"><input  class="edit" placeholder="点击输入" name="mileage" type="number"  required/></div>
+                       <div class="item-content"><input  class="edit" placeholder="点击输入" name="commentbean.feelpoint" type="number"  required/></div>
                         <div class="clear"></div>
                      </div>
                      <div class="item-is">
                       <div class="item-name">服务评分</div>
-                       <div class="item-content"><input  class="edit" placeholder="点击输入" name="mileage" type="number"  required/></div>
+                       <div class="item-content"><input  class="edit" placeholder="点击输入" name="commentbean.servicepoint" type="number"  required/></div>
                         <div class="clear"></div>
                      </div>
                       <div class="item-is">
 
                       <div class="item-name">卫生评分</div>
-                       <div class="item-content"><input  class="edit" placeholder="点击输入" name="mileage" type="number"  required/></div>
+                       <div class="item-content"><input  class="edit" placeholder="点击输入" name="commentbean.healthpoint" type="number"  required/></div>
                         <div class="clear"></div>
                      </div>
                       <div class="item-is">
                         <div class="item-name">半铺园印象</div>
-                       <div class="item-content"><input  class="edit" placeholder="点击输入" name="mileage" type="text"  required/></div>
+                       <div class="item-content"><input  class="edit" placeholder="点击输入" name="commentbean.impress" type="text"  required/></div>
                         <div class="clear"></div>
                      </div>
                  </div>
@@ -140,12 +169,12 @@ String path = request.getContextPath();
         <button type="button" class="btn btn-default" 
             data-dismiss="modal">关闭
         </button>
-        <button type="button" class="btn btn-primary">
-          提交更改
+        <button type="button" class="btn btn-primary" onclick="save();">
+          提交
         </button>
       </div>
     </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
+  </form><!-- /.modal-dialog -->
 </div>
 </body>
 </html>
