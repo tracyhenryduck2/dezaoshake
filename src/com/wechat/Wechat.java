@@ -44,38 +44,40 @@ public class Wechat extends BaseActionSupport{
 	 */
 	public String play(){
 		String code = request.getParameter("code");
-        Map<String, String> result = getUserInfoAccessToken(code);//通过这个code获取access_token
-        String openId = result.get("openid");
-        if (StringUtils.isNotEmpty(openId)) {
-            Map<String, String> userInfo = getUserInfo(result.get("access_token"), openId);//使用access_token获取用户信息
-            System.out.println("received user info. [result="+userInfo+"]");
-            Map<String,Object> d = memberdao.getUserInfo(openId);
+		
+	        Map<String, String> result = getUserInfoAccessToken(code);//通过这个code获取access_token
+	        String openId = result.get("openid");
+	        if (StringUtils.isNotEmpty(openId)) {
+	            Map<String, String> userInfo = getUserInfo(result.get("access_token"), openId);//使用access_token获取用户信息
+	            System.out.println("received user info. [result="+userInfo+"]");
+	            Map<String,Object> d = memberdao.getUserInfo(openId);
 
-            if(d==null){
-                String nickname = userInfo.get("nickname");
-                String province = userInfo.get("province");
-                String city = userInfo.get("city");
-                String headimgurl = userInfo.get("headimgurl");
-                MemberBean member = new MemberBean();
-                member.setNickname(nickname);
-                member.setCity(city);
-                member.setProvince(province);
-                member.setHeadimgurl(headimgurl);
-                member.setOpenid(openId);
-                Long userid = memberdao.save(member);
-                member.setId(userid);
-                memberdao.inserMember(userid, 0l, 20l);
-                request.setAttribute("user", JSONObject.fromObject(member));
-            	return "success";
-            }else{
-        		JSONObject rootObject = JSONObject.fromObject(d);
-                request.setAttribute("user", rootObject);
-        		return "success";
-            }
+	            if(d==null){
+	                String nickname = userInfo.get("nickname");
+	                String province = userInfo.get("province");
+	                String city = userInfo.get("city");
+	                String headimgurl = userInfo.get("headimgurl");
+	                MemberBean member = new MemberBean();
+	                member.setNickname(nickname);
+	                member.setCity(city);
+	                member.setProvince(province);
+	                member.setHeadimgurl(headimgurl);
+	                member.setOpenid(openId);
+	                Long userid = memberdao.save(member);
+	                member.setId(userid);
+	                memberdao.inserMember(userid, 0l, 20l);
+	                request.setAttribute("user", JSONObject.fromObject(member));
+	            	return "success";
+	            }else{
+	        		JSONObject rootObject = JSONObject.fromObject(d);
+	        		request.setAttribute("user", rootObject);
+	        		return "success";
+	            }
 
-        }else{
-        	return "failed";
-        }
+	        }else{
+	        	return "failed";
+	        }
+
 	
 	}
 	
@@ -235,28 +237,22 @@ public class Wechat extends BaseActionSupport{
 	 * http://SERVER[:PORT]/PROJECTNAME/Wechat!commentsubmit.action
 	 * @return
 	 */
-	public String commentsubmit(){
-		
-        try {   
-            showMessage = "新增评论"; 
+	public void commentsubmit(){
+		  
+            Map<String,Object> re =new HashMap<String,Object>(); 
             boolean result = true;  
-     
+           
             result = commentdao.insert(commentbean); 
            
-            if (result) {
-            	Map<String,Object> user = memberdao.getUserInfoByid(commentbean.getId());
-            	request.setAttribute("user", JSONObject.fromObject(user));
-                
-                return "success"; 
-            } else {
-                showMessage += "失败";  
-                return error;   
-            }  
-        } catch (Exception e) {    
-            showMessage = "数据异常，操作失败";   
-            return error;  
-        } 
-		
+            if(result){
+            re.put("errcode", 0);
+            re.put("errmessage", "评论成功");
+            }
+            else{
+            	re.put("errcode", 1);
+            	re.put("errmessage","评论失败");
+            }
+            outPrintJSONObject(re);
 	}
 
 	public CommentBean getCommentbean() {

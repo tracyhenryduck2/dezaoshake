@@ -10,6 +10,7 @@
 		<package name="wechat" extends="struts-default" namespace="/">
 		    <action name="Wechat" class="com.wechat.Wechat">
 				<result name="success">/index_prize.jsp</result>
+				<result name="failed">/failed.html</result>
            </action>
 		</package>
 		<package name="wechat.pc" extends="login.interceptor" namespace="/">

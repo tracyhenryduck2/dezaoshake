@@ -6,7 +6,7 @@
   </head>
   <body>
    <script>
-	   parent.result("<%=request.getParameter("messageType")%>", "${showMessage}");
+	   result("<%=request.getParameter("messageType")%>", "${showMessage}");
    </script>
  </body>
 </html>

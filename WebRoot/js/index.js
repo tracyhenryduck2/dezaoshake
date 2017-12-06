@@ -178,6 +178,30 @@ Index.test=function(){
 
 }
 
+Index.myAlert = function(){
+   $( "#dialog-confirm" ).dialog({
+     resizable: false,
+     height:140,
+     modal: true,
+//按钮
+     buttons: {
+       "取消": function() {
+//关闭按钮
+         $( this ).dialog( "close" );
+       },
+       "确定": function() {
+         $( this ).dialog( "close" );
+alert("确定");
+       },
+  "删除": function() {
+         $( this ).dialog( "close" );
+alert("删除");
+       }
+     }
+   });
+}
+
+
 Index.loadprizelist();
 
   }]);

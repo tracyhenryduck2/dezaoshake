@@ -96,6 +96,8 @@ function removeMask()
   
 
 }
+
+
 function change(ele)
 {
   ele.style.height = (ele.scrollHeight-8) + 'px';
@@ -109,31 +111,6 @@ function goPrevious() {
     }
 };
 
-function progress(type,message,method){
-    if(isAndroid()){
-    	client.progress(type,message,method);
-    }else{
-        client.progress("progress",[type,message,method],
-                        function(success){
-                        },
-                        function(error) {
-                        alert("Error: \r\n"+error);
-                        });
-    }
-};
-
-function MyAlert(message,method){
-    if(isAndroid()){
-        client.MyAlert(message,method);
-    }else{
-        client.MyAlert("progress",[message,method],
-                        function(success){
-                        },
-                        function(error) {
-                        alert("Error: \r\n"+error);
-                        });
-    }
-};
 
 
 function showAlert(title,message,method){

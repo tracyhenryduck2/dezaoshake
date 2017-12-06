@@ -11,8 +11,10 @@ String path = request.getContextPath();
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 <link href="css/css_mobile.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="css/tinyscrollbar.css" type="text/css"/>
-<script type="text/javascript" src="js/gdk.js"></script>
 <script type="text/javascript" src="js/jquery.min.js"></script>
+ <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+ <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+ <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/angular.min.js"></script>
 <script type="text/javascript" src="js/Turntable2.js"></script>
@@ -33,16 +35,6 @@ String path = request.getContextPath();
   .item-content {width: 70%;float: left;}
   input.edit {margin-bottom: 0px;}
 </style>
-</head>
-<body style="background:#ffed5d;" ng-controller="IndexController as Index">
-<div class="body">
-  <!-- <div class="guangao"><img src="images/zhuanzhuan_01.png"  alt=""/></div> -->
-  <div class="logo"><img src="images/left_02.png" style="width:50px;float: left;"><img src="images/logo_02.png"  style="width:200px;" alt=""/><img src="images/right_02.png" style="width:50px;float: right;">
-  </div>
-  <!--<div style="overflow-x:hidden;">--> 
-    <div class="banner" id="ban">
-
-        <canvas class="item" id="a_g" width="300" height="300" ng-click="Index.test()"></canvas>
               <script type="text/javascript">
     
 
@@ -58,58 +50,70 @@ String path = request.getContextPath();
                  *
                  */
                    $('#myModal').modal({keyboard: true});
-               var scrollbar = tinyscrollbar(document.getElementById("scrollbar1"),{thumbSize:10,trackSize:150,thumbSizeMin:20});
-
+                var scrollbar = tinyscrollbar(document.getElementById("scrollbar1"),{thumbSize:10,trackSize:150,thumbSizeMin:20});
 
             }
 
           function initPosition(){
-          	var a = document.getElementById("ban");
-          	var width = getStyle(a,"width");
+            var a = document.getElementById("ban");
+            var width = getStyle(a,"width");
        
-          	var b =parseInt(width)-300;
+            var b =parseInt(width)-300;
             document.getElementById("a_g").style.marginLeft=b/2+"px";
           }
 
 
 
  var isCommit=false 
-  function save(){                        
-    if($("#form1").valid()) {           
+  function save(){                                 
         if(isCommit==false){   
          isCommit=true       
-      form1.submit();                     
+                 $.ajax({
+          type:"post",
+          url:"<%=path%>/Wechat!commentsubmit.action",
+          data:"commentbean.userid="+$(":input[name='commentbean.userid']").val()
+          + "&commentbean.realname="+$(":input[name='commentbean.realname']").val()
+          + "&commentbean.casepoint="+$(":input[name='commentbean.casepoint']").val()
+          + "&commentbean.feelpoint="+$(":input[name='commentbean.feelpoint']").val()
+          + "&commentbean.servicepoint="+$(":input[name='commentbean.servicepoint']").val()
+          + "&commentbean.healthpoint="+$(":input[name='commentbean.healthpoint']").val()
+          + "&commentbean.impress="+$(":input[name='commentbean.impress']").val()    
+          ,
+          success:function(data){
+          var response=eval("("+data+")");
+             console.log(response);
+          }
+          });                     
       }                 
-    }                                     
+                                     
   }  
 
-  function result(messageType, message){  
-    if(messageType=="error"){           
-      Dialog.error(message);              
-    } else if (messageType == "reload_success") {   
-      Dialog.alert(message,function(){    
-        Dialog.opener().location.reload(); //;= "<%=path%>/system/Member!list.action";   
-            
-      });                                 
-    } else if(messageType == "exception") { 
-                                          
-    }                                     
-  }
+
+    </script>
 
 
-            </script>
+</head>
+<body style="background:#ffed5d;" ng-controller="IndexController as Index">
+<div class="body">
+  <!-- <div class="guangao"><img src="images/zhuanzhuan_01.png"  alt=""/></div> -->
+  <div class="logo"><img src="images/left_02.png" style="width:50px;float: left;"><img src="images/logo_02.png"  style="width:200px;" alt=""/><img src="images/right_02.png" style="width:50px;float: right;">
+  </div>
+  <!--<div style="overflow-x:hidden;">--> 
+    <div class="banner" id="ban">
+
+        <canvas class="item" id="a_g" width="300" height="300" ng-click="Index.test()"></canvas>
+
   </div>
   <div class="zhongjian"><img src="images/zhongj.png" style="    width: 136px;" alt=""/><marquee    scrollamount="3"  direction="up"  class="imgRadius2_title">
     <p ng-repeat="map in Index.userlist">{{map.uname}}&nbsp;&nbsp;&nbsp;{{map.phone | phoneFilter}}&nbsp;&nbsp;&nbsp;恭喜获得{{map.money}}元</p>
     </marquee > </div>
 <!--   <div class="guangao1"><img src="images/zhuanzhuan_11.png"  alt=""/></div> -->
 <!--</div>-->
-<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+<button class="btn btn-primary btn-lg" ng-click="Index.myAlert()">
   开始演示模态框
 </button>
 <!-- 模态框（Modal） -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <form  id="form1" action="<%=path%>/Wechat!commentsubmit.action" class="modal-dialog">
+ <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <input type="hidden" name="commentbean.userid" value="1" />
     <div class="modal-content">
       <div class="modal-header">
@@ -117,7 +121,7 @@ String path = request.getContextPath();
             aria-hidden="true">×
         </button>
         <h4 class="modal-title" id="myModalLabel">
-          模态框（Modal）标题
+          请写下你对半铺园的印象
         </h4>
       </div>
       <div class="modal-body">
@@ -160,10 +164,6 @@ String path = request.getContextPath();
                  </div>
             </div>
             </div>
-
-
-
-
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" 
@@ -173,9 +173,19 @@ String path = request.getContextPath();
           提交
         </button>
       </div>
-    </div><!-- /.modal-content -->
-  </form><!-- /.modal-dialog -->
+    </div>
+</div> 
+
+
+<div id="dialog-confirm" title="jquery ui演示弹出层">
+ <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>jquery ui弹出层内容测试中</p>
+  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>jquery ui弹出层内容测试中</p>
+   <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>jquery ui弹出层内容测试中</p>
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>jquery ui弹出层内容测试中</p>
+     <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>jquery ui弹出层内容测试中</p>
+      <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>jquery ui弹出层内容测试中</p>
 </div>
+<p>jquery ui弹出层使用</p>
 </body>
 </html>
                                
