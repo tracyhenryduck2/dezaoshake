@@ -97,6 +97,16 @@ function removeMask()
 
 }
 
+function creatDialog(popDivId) { 
+// 参数w为弹出页面的宽度,参数h为弹出页面的高度,参数s为弹出页面的路径 
+var maskDiv = window.parent.document.createElement("div"); 
+maskDiv.id = "dialog-confirm"; 
+maskDiv.setAttribute("title","提示");
+maskDiv.innerHTML="<p><span class='ui-icon ui-icon-alert' style='float:left; margin:0 7px 20px 0;'></span>jquery ui弹出层内容测试中</p>";
+window.parent.document.body.appendChild(maskDiv); 
+maskDiv.style.display="none";
+}
+
 
 function change(ele)
 {

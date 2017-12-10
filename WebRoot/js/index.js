@@ -78,6 +78,29 @@ var t;
     Index=this;
     model=Index;
     request=$http;
+    
+
+    $( "#dialog-success" ).dialog({
+      autoOpen: false,
+      modal:true,
+           buttons: {
+       "确定": function() {
+         $( this ).dialog( "close" );
+       }
+     }
+    });
+ 
+     $( "#dialog-fail" ).dialog({
+      autoOpen: false,
+      modal:true,
+           buttons: {
+       "确定": function() {
+         $( this ).dialog( "close" );
+       }
+     }
+    });
+
+
     Index.ads = false;
     Index.userlist=[{uname:"张三",phone:"13136369541",money:"123456"}];
     var c = document.getElementById("a_g");
@@ -179,26 +202,7 @@ Index.test=function(){
 }
 
 Index.myAlert = function(){
-   $( "#dialog-confirm" ).dialog({
-     resizable: false,
-     height:140,
-     modal: true,
-//按钮
-     buttons: {
-       "取消": function() {
-//关闭按钮
-         $( this ).dialog( "close" );
-       },
-       "确定": function() {
-         $( this ).dialog( "close" );
-alert("确定");
-       },
-  "删除": function() {
-         $( this ).dialog( "close" );
-alert("删除");
-       }
-     }
-   });
+$( "#dialog-success" ).dialog( "open" );
 }
 
 

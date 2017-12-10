@@ -7,6 +7,7 @@ String path = request.getContextPath();
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width,user-scalable=no"/>
+<meta name="format-detection" content="telephone=no, email=no"/>
 <title>摇奖</title>
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 <link href="css/css_mobile.css" rel="stylesheet" type="text/css">
@@ -34,11 +35,16 @@ String path = request.getContextPath();
   .item-name {width: 25%;float: left;height: 28px;line-height: 28px}
   .item-content {width: 70%;float: left;}
   input.edit {margin-bottom: 0px;}
+  .bottom-menu {height: 40px;width: 100%;position: fixed;bottom: 0px}
+  .bottom-menu p {width: 33.33%;float: left;background:#ffd61a;height: 100%;text-align: center;
+    line-height: 40px;}
+  .bottom-menu p.current a{color: #f16100}
+    .bottom-menu p a{color: black;font-size: 12px}
 </style>
               <script type="text/javascript">
     
 
-            //var user =  ${user};
+            var user =  ${user};
             window.onload = function() {
                 /**
                  * 说明
@@ -49,7 +55,10 @@ String path = request.getContextPath();
                  * 当服务器返回数据，设置转盘最终的结果
                  *
                  */
+                 var ds = ${opendialog};
+                 if(ds==1){
                    $('#myModal').modal({keyboard: true});
+                 }
                 var scrollbar = tinyscrollbar(document.getElementById("scrollbar1"),{thumbSize:10,trackSize:150,thumbSizeMin:20});
 
             }
@@ -71,7 +80,7 @@ String path = request.getContextPath();
                  $.ajax({
           type:"post",
           url:"<%=path%>/Wechat!commentsubmit.action",
-          data:"commentbean.userid="+$(":input[name='commentbean.userid']").val()
+          data:"commentbean.userid="+parseInt($(":input[name='commentbean.userid']").val())
           + "&commentbean.realname="+$(":input[name='commentbean.realname']").val()
           + "&commentbean.casepoint="+$(":input[name='commentbean.casepoint']").val()
           + "&commentbean.feelpoint="+$(":input[name='commentbean.feelpoint']").val()
@@ -82,12 +91,17 @@ String path = request.getContextPath();
           success:function(data){
           var response=eval("("+data+")");
              console.log(response);
+              $('#myModal').modal('hide');
+             if(response.errcode==0){
+                     $( "#dialog-success" ).dialog( "open" ); 
+             }else{
+                     $( "#dialog-fail" ).dialog( "open" ); 
+             }
           }
           });                     
       }                 
                                      
   }  
-
 
     </script>
 
@@ -105,7 +119,7 @@ String path = request.getContextPath();
 
   </div>
   <div class="zhongjian"><img src="images/zhongj.png" style="    width: 136px;" alt=""/><marquee    scrollamount="3"  direction="up"  class="imgRadius2_title">
-    <p ng-repeat="map in Index.userlist">{{map.uname}}&nbsp;&nbsp;&nbsp;{{map.phone | phoneFilter}}&nbsp;&nbsp;&nbsp;恭喜获得{{map.money}}元</p>
+    <p style="width:100%" ng-repeat="map in Index.userlist">{{map.uname}}&nbsp;&nbsp;{{map.phone | phoneFilter}}&nbsp;&nbsp;&nbsp;恭喜获得{{map.money}}元</p>
     </marquee > </div>
 <!--   <div class="guangao1"><img src="images/zhuanzhuan_11.png"  alt=""/></div> -->
 <!--</div>-->
@@ -114,7 +128,7 @@ String path = request.getContextPath();
 </button>
 <!-- 模态框（Modal） -->
  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <input type="hidden" name="commentbean.userid" value="1" />
+  <input type="hidden" name="commentbean.userid" value="${user.id}" />
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" 
@@ -176,16 +190,15 @@ String path = request.getContextPath();
     </div>
 </div> 
 
-
-<div id="dialog-confirm" title="jquery ui演示弹出层">
- <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>jquery ui弹出层内容测试中</p>
-  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>jquery ui弹出层内容测试中</p>
-   <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>jquery ui弹出层内容测试中</p>
-    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>jquery ui弹出层内容测试中</p>
-     <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>jquery ui弹出层内容测试中</p>
-      <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>jquery ui弹出层内容测试中</p>
+<div class="bottom-menu"><p class="current"><a>抽奖</a></p><p><a href="<%=path%>/Wechat!mine.action">我的</a></p><p><a>说明</a></p></div>
+<div id="dialog-success" title="提示">
+  <p>评论成功</p>
 </div>
-<p>jquery ui弹出层使用</p>
+
+<div id="dialog-fail" title="提示">
+  <p>评论失败</p>
+</div>
+
 </body>
 </html>
                                

@@ -67,10 +67,14 @@ public class Wechat extends BaseActionSupport{
 	                member.setId(userid);
 	                memberdao.inserMember(userid, 0l, 20l);
 	                request.setAttribute("user", JSONObject.fromObject(member));
+	                request.setAttribute("opendialog", 1);
 	            	return "success";
 	            }else{
+	            	int userid = (Integer)d.get("id");
+	            	Long comments = wechatdao.getClientsCommentNum(userid);
 	        		JSONObject rootObject = JSONObject.fromObject(d);
 	        		request.setAttribute("user", rootObject);
+	        		request.setAttribute("opendialog", comments>0?0:1);
 	        		return "success";
 	            }
 
@@ -255,6 +259,12 @@ public class Wechat extends BaseActionSupport{
             outPrintJSONObject(re);
 	}
 
+	public String mine(){
+		
+		return "my";
+		
+	}
+	
 	public CommentBean getCommentbean() {
 		return commentbean;
 	}

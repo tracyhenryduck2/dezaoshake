@@ -55,4 +55,9 @@ public class WechatDAO extends BaseDAO {
     	return j.execute(sql, params);
     	
     }
+    
+    public Long getClientsCommentNum(int userid){
+    	String sql = "select count(*) from comment where userid = "+ userid;
+    	return j.queryForLong(sql);
+    }
 }
