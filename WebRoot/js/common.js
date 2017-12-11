@@ -30,10 +30,6 @@ function getBranch(){
 	return branch;
 }
 
-function getPath()
-{
-	return "112.33.1.143:88";
-}
 function getFilePath()
 {
     return "http://"+client.getIpPort()+"/upload/";

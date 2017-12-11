@@ -146,7 +146,7 @@ var t;
                     });
        } 
 
-removeMask();
+     removeMask();
 
         }).error(function(data,status,headers,config){
          if((status>=200&&status<300)||status===304||status===1223||status===0){
@@ -160,7 +160,7 @@ Index.test=function(){
    if(Index.ads == true) return;
     Index.ads = true;
       creatMask();
-          $http.post('http://'+getPath()+'/dezaoshake/Wechat!getPrize.action?id='+user.id).success(function(data){
+          $http.post('http://'+getPath()+'/dezaoshake/Wechat!getPrize.action').success(function(data){
              removeMask();
              console.log(data);
             if(data.errcode==8400005)  //中奖

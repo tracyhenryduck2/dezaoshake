@@ -4,7 +4,7 @@ public enum ErrCode {
      
 	  
 	  SUCCESS_GETLIST(8200000,"获取列表成功"), 
-
+      
 	  UNKNOWN_DEVICE_ERROR(8400000,"未知错误"), 
       SERVER_INERNAL_ERROR(8500000,"服务器内部错误"),
 	  UNPRIZE_ERROR(8400001,"未中奖"),
@@ -12,7 +12,10 @@ public enum ErrCode {
 	  PARAMS_EMPTY_ERROR(8400003,"参数为空"),
 	  PRIZE_NUMBER_EMPTY_ERROR(8400004,"您的抽奖次数已用完，请明天再试"),
 	  SUCCESS_PRIZE(8400005,"中奖"),
-	  NO_THIS_PRIZE_CONF_ERROR(8400006,"未设置该奖项");
+	  NO_THIS_PRIZE_CONF_ERROR(8400006,"未设置该奖项"),
+	  SUCCESS_COMMENT(840007,"评论成功"),
+	  FAIL_COMMENT(840008,"评论失败"),
+	  COOKIE_IS_NULL(840009,"COOKIE为空");
 	  
 	  
 	

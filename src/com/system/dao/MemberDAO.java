@@ -67,6 +67,12 @@ public class MemberDAO extends BaseDAO {
       	 return j.queryForMap(sql, ds);
        }
     
+    public Map<String,Object> getUserAllInfo(int id){
+     	 String sql = "select * from member where id = ?";
+     	 Object[] ds = {id};
+     	 return j.queryForMap(sql, ds);
+      }
+    
     public Map<String,Object> getUserInfoByid(Long id){
      	 String sql = "select a.id,b.timeleft from member a left join memberextended b on a.id=b.userid where a.id = ?";
      	 Object[] ds = {id};

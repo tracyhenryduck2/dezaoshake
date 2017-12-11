@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
@@ -18,6 +22,7 @@ import org.apache.http.util.EntityUtils;
 import com.bean.ErrCode;
 import com.bean.StaticBean;
 import com.common.BaseActionSupport;
+import com.common.CookieTools;
 import com.common.Transaction;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -45,6 +50,9 @@ public class Wechat extends BaseActionSupport{
 	public String play(){
 		String code = request.getParameter("code");
 		
+		Cookie cookies = CookieTools.getCookieByName(request, "token"); 
+		if(cookies == null){
+			
 	        Map<String, String> result = getUserInfoAccessToken(code);//通过这个code获取access_token
 	        String openId = result.get("openid");
 	        if (StringUtils.isNotEmpty(openId)) {
@@ -68,6 +76,10 @@ public class Wechat extends BaseActionSupport{
 	                memberdao.inserMember(userid, 0l, 20l);
 	                request.setAttribute("user", JSONObject.fromObject(member));
 	                request.setAttribute("opendialog", 1);
+	                
+	                String token =userid+":"+CookieTools.getIpAddr(request)+":"+new Date().getTime()/1000l;
+	                CookieTools.addCookie(response, "token", token, 0);
+	                
 	            	return "success";
 	            }else{
 	            	int userid = (Integer)d.get("id");
@@ -75,12 +87,30 @@ public class Wechat extends BaseActionSupport{
 	        		JSONObject rootObject = JSONObject.fromObject(d);
 	        		request.setAttribute("user", rootObject);
 	        		request.setAttribute("opendialog", comments>0?0:1);
+	        		
+	                String token =userid+":"+CookieTools.getIpAddr(request)+":"+new Date().getTime()/1000l;
+	                CookieTools.addCookie(response, "token", token, 0);
+	        		
 	        		return "success";
 	            }
 
 	        }else{
 	        	return "failed";
 	        }
+		}else{
+			String token = cookies.getValue();
+			System.out.println("token:"+token);
+			int index = token.indexOf(":");
+			final Integer userid = Integer.parseInt(token.substring(0, index));
+            Map<String,Object> d = memberdao.getUserAllInfo(userid);
+        	Long comments = wechatdao.getClientsCommentNum(userid);
+    		JSONObject rootObject = JSONObject.fromObject(d);
+    		request.setAttribute("user", rootObject);
+    		request.setAttribute("opendialog", comments>0?0:1);
+    		
+    		return "success";
+		}
+
 
 	
 	}
@@ -170,11 +200,16 @@ public class Wechat extends BaseActionSupport{
 	
 	
 	public void getPrize(){
-		String userid = request.getParameter("id");
 		final Map<String,Object> result = new HashMap<String,Object>();
-		if(StringUtils.isNotEmpty(userid)){
-			final Long id2 = Long.parseLong(userid);
-			final Map<String,Object> userinfo = memberdao.getUserInfoByid(id2);
+		
+		Cookie cok = CookieTools.getCookieByName(request, "token");
+		if(cok!=null){
+			String token = cok.getValue();
+			System.out.println("token:"+token);
+			int index = token.indexOf(":");
+			final Long userid = Long.parseLong(token.substring(0, index));
+
+			final Map<String,Object> userinfo = memberdao.getUserInfoByid(userid);
 	        if(userinfo!=null){
 	        	
 	        	final int timeleft = (Integer)userinfo.get("timeleft");
@@ -190,8 +225,8 @@ public class Wechat extends BaseActionSupport{
 									public void run() throws Exception {
 										// TODO Auto-generated method stub
 										
-										wechatdao.insertPrizeLog(id2,new Date().getTime()/1000,id);
-					        			wechatdao.updatePrizeNum(id2, timeleft-1);
+										wechatdao.insertPrizeLog(userid,new Date().getTime()/1000,id);
+					        			wechatdao.updatePrizeNum(userid, timeleft-1);
 										result.put("errcode", ErrCode.SUCCESS_PRIZE.getCode());
 										result.put("errmsg", ErrCode.SUCCESS_PRIZE.getName());
 										for(String key:userinfo.keySet()){
@@ -211,7 +246,7 @@ public class Wechat extends BaseActionSupport{
 	        			
 	        		}else{
 	        			
-	        			wechatdao.updatePrizeNum(id2, timeleft-1);
+	        			wechatdao.updatePrizeNum(userid, timeleft-1);
 						result.put("errcode", ErrCode.UNPRIZE_ERROR.getCode());
 						result.put("errmsg", ErrCode.UNPRIZE_ERROR.getName());
 						for(String key:userinfo.keySet()){
@@ -228,11 +263,11 @@ public class Wechat extends BaseActionSupport{
 				result.put("errcode", ErrCode.NO_THIS_CLIENT_ERROR.getCode());
 				result.put("errmsg", ErrCode.NO_THIS_CLIENT_ERROR.getName());
 	        }
-		}else{
-		
-			result.put("errcode", ErrCode.PARAMS_EMPTY_ERROR.getCode());
-			result.put("errmsg", ErrCode.PARAMS_EMPTY_ERROR.getName());
+		}else {
+			result.put("errcode", ErrCode.COOKIE_IS_NULL.getCode());
+			result.put("errmsg", ErrCode.COOKIE_IS_NULL.getName());
 		}
+
 		
 		outPrintJSONObject(result);	
 	}
@@ -249,12 +284,12 @@ public class Wechat extends BaseActionSupport{
             result = commentdao.insert(commentbean); 
            
             if(result){
-            re.put("errcode", 0);
-            re.put("errmessage", "评论成功");
+            re.put("errcode", ErrCode.SUCCESS_COMMENT.getCode());
+            re.put("errmessage", ErrCode.SUCCESS_COMMENT.getName());
             }
             else{
-            	re.put("errcode", 1);
-            	re.put("errmessage","评论失败");
+            	re.put("errcode", ErrCode.FAIL_COMMENT.getCode());
+            	re.put("errmessage",ErrCode.FAIL_COMMENT.getName());
             }
             outPrintJSONObject(re);
 	}
@@ -272,5 +307,6 @@ public class Wechat extends BaseActionSupport{
 	public void setCommentbean(CommentBean commentbean) {
 		this.commentbean = commentbean;
 	}	
+	
 	
 }

@@ -46,7 +46,7 @@ String path = request.getContextPath();
   <div class="logo"><img src="images/left_02.png" style="width:50px;float: left;"><img src="images/logo_02.png"  style="width:200px;" alt=""/><img src="images/right_02.png" style="width:50px;float: right;">
   </div>
 
-<div class="bottom-menu"><p><a href="<%=path%>/Wechat!play.action">抽奖</a></p><p class="current">我的</p><p>说明</p></div>
+<div class="bottom-menu"><p><a href="<%=path%>/Wechat!play.action">抽奖</a></p><p class="current"><a>我的</a></p><p><a>说明</a></p></div>
 </body>
 </html>
                                

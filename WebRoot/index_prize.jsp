@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>   
 <%                                       
 String path = request.getContextPath();  
+String server = request.getServerName();
 %>                                       
 <!doctype html>
 <html ng-app="Index">
@@ -41,8 +42,10 @@ String path = request.getContextPath();
   .bottom-menu p.current a{color: #f16100}
     .bottom-menu p a{color: black;font-size: 12px}
 </style>
-              <script type="text/javascript">
-    
+<script type="text/javascript">
+          function getPath(){
+          return '<%=server%>';
+        }  
 
             var user =  ${user};
             window.onload = function() {
@@ -73,6 +76,7 @@ String path = request.getContextPath();
 
 
 
+
  var isCommit=false 
   function save(){                                 
         if(isCommit==false){   
@@ -92,7 +96,7 @@ String path = request.getContextPath();
           var response=eval("("+data+")");
              console.log(response);
               $('#myModal').modal('hide');
-             if(response.errcode==0){
+             if(response.errcode==840007){
                      $( "#dialog-success" ).dialog( "open" ); 
              }else{
                      $( "#dialog-fail" ).dialog( "open" ); 
