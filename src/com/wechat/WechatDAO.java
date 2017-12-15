@@ -60,4 +60,10 @@ public class WechatDAO extends BaseDAO {
     	String sql = "select count(*) from comment where userid = "+ userid;
     	return j.queryForLong(sql);
     }
+    
+    public List<Map<String,Object>> getPrizeList(Long userid){
+    	String sql = "select a.id,a.ctime,b.name from prize_log a left join prizeconf b on a.prizeid=b.id where a.userid=?";
+    	Object[] params = {userid};
+    	return j.queryForList(sql, params);	
+    }
 }

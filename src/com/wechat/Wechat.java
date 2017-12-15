@@ -10,6 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
@@ -294,9 +295,30 @@ public class Wechat extends BaseActionSupport{
             outPrintJSONObject(re);
 	}
 
-	public String mine(){
+	public String prizeList(){
 		
-		return "my";
+		Cookie cok = CookieTools.getCookieByName(request, "token");
+		if(cok!=null){
+			String token = cok.getValue();
+			System.out.println("token:"+token);
+			int index = token.indexOf(":");
+			final Long userid = Long.parseLong(token.substring(0, index));
+//			
+			List<Map<String,Object>> prizelist = wechatdao.getPrizeList(18l);
+			request.setAttribute("prizelist", prizelist);
+			
+			return "my";
+			
+			
+			}else{
+				return "failed";
+			}
+		}
+	
+	
+	public String instruction(){
+		
+		return "instruction";
 		
 	}
 	

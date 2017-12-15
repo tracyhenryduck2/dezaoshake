@@ -127,9 +127,6 @@ String server = request.getServerName();
     </marquee > </div>
 <!--   <div class="guangao1"><img src="images/zhuanzhuan_11.png"  alt=""/></div> -->
 <!--</div>-->
-<button class="btn btn-primary btn-lg" ng-click="Index.myAlert()">
-  开始演示模态框
-</button>
 <!-- 模态框（Modal） -->
  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <input type="hidden" name="commentbean.userid" value="${user.id}" />
@@ -194,7 +191,7 @@ String server = request.getServerName();
     </div>
 </div> 
 
-<div class="bottom-menu"><p class="current"><a>抽奖</a></p><p><a href="<%=path%>/Wechat!mine.action">我的</a></p><p><a>说明</a></p></div>
+<div class="bottom-menu"><p class="current"><a>抽奖</a></p><p><a href="<%=path%>/Wechat!prizeList.action">我的</a></p><p><a href="<%=path%>/Wechat!instruction.action">说明</a></p></div>
 <div id="dialog-success" title="提示">
   <p>评论成功</p>
 </div>

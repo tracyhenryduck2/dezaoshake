@@ -12,7 +12,8 @@
 				<result name="success">/index_prize.jsp</result>
 				<result name="failed">/failed.html</result>
 				<result name="my">/my.jsp</result>
-           </action>
+				<result name="instruction">/instruction.jsp</result>
+		    </action>
 		</package>
 		<package name="wechat.pc" extends="login.interceptor" namespace="/">
 		   <action name="Comment" class="com.wechat.action.CommentAction">

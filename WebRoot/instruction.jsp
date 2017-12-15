@@ -10,7 +10,7 @@ String path = request.getContextPath();
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width,user-scalable=no"/>
 <meta name="format-detection" content="telephone=no, email=no"/>
-<title>我的</title>
+<title>说明</title>
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 <link href="css/css_mobile.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
@@ -36,20 +36,11 @@ String path = request.getContextPath();
   <!-- <div class="guangao"><img src="images/zhuanzhuan_01.png"  alt=""/></div> -->
   <div class="logo"><img src="images/left_02.png" style="width:50px;float: left;"><img src="images/logo_02.png"  style="width:200px;" alt=""/><img src="images/right_02.png" style="width:50px;float: right;">
 
-<s:if test="#request.prizelist.size()>0">
-<s:iterator value="#request.prizelist" id="map">
-
-    <div>${map.name} &nbsp; <GF:ConvertTime format="yyyy-dd-MM HH:mm:ss" value="${map.ctime}"/> </div>
-</s:iterator> 
-</s:if>
-<s:else>
-  <div>
-      您还没有奖品!
-  </div>
-</s:else>
+  <img src="images/dezaocode.JPG" style="width:100px;height:100px" />
+  
   </div>
 
-<div class="bottom-menu"><p><a href="<%=path%>/Wechat!play.action">抽奖</a></p><p class="current"><a>我的</a></p><p><a href="<%=path%>/Wechat!instruction.action">说明</a></p></div>
+<div class="bottom-menu"><p><a href="<%=path%>/Wechat!play.action">抽奖</a></p><p ><a href="<%=path%>/Wechat!prizeList.action">我的</a></p><p class="current"><a>说明</a></p></div>
 </body>
 </html>
                                

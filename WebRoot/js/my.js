@@ -78,8 +78,6 @@ var t;
     Index=this;
     model=Index;
     request=$http;
-
-
   }]);
 })();
 
