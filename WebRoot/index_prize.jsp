@@ -97,9 +97,11 @@ String server = request.getServerName();
              console.log(response);
               $('#myModal').modal('hide');
              if(response.errcode==840007){
+                  $( "#dialog-success" ).html("<p>评论成功</p>");
                      $( "#dialog-success" ).dialog( "open" ); 
              }else{
-                     $( "#dialog-fail" ).dialog( "open" ); 
+                                $( "#dialog-success" ).html("<p>评论失败</p>");
+                     $( "#dialog-success" ).dialog( "open" ); 
              }
           }
           });                     
@@ -113,7 +115,6 @@ String server = request.getServerName();
 </head>
 <body style="background:#ffed5d;" ng-controller="IndexController as Index">
 <div class="body">
-  <!-- <div class="guangao"><img src="images/zhuanzhuan_01.png"  alt=""/></div> -->
   <div class="logo"><img src="images/left_02.png" style="width:50px;float: left;"><img src="images/logo_02.png"  style="width:200px;" alt=""/><img src="images/right_02.png" style="width:50px;float: right;">
   </div>
   <!--<div style="overflow-x:hidden;">--> 
@@ -125,9 +126,7 @@ String server = request.getServerName();
   <div class="zhongjian"><img src="images/zhongj.png" style="    width: 136px;" alt=""/><marquee    scrollamount="3"  direction="up"  class="imgRadius2_title">
     <p style="width:100%" ng-repeat="map in Index.userlist">{{map.uname}}&nbsp;&nbsp;{{map.phone | phoneFilter}}&nbsp;&nbsp;&nbsp;恭喜获得{{map.money}}元</p>
     </marquee > </div>
-    
-<!--   <div class="guangao1"><img src="images/zhuanzhuan_11.png"  alt=""/></div> -->
-<!--</div>-->
+
 <!-- 模态框（Modal） -->
  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <input type="hidden" name="commentbean.userid" value="${user.id}" />
@@ -194,12 +193,9 @@ String server = request.getServerName();
 
 <div class="bottom-menu"><p class="current"><a>抽奖</a></p><p><a href="<%=path%>/Wechat!prizeList.action">我的</a></p><p><a href="<%=path%>/Wechat!instruction.action">说明</a></p></div>
 <div id="dialog-success" title="提示">
-  <p>评论成功</p>
+
 </div>
 
-<div id="dialog-fail" title="提示">
-  <p>评论失败</p>
-</div>
 
 </body>
 </html>

@@ -90,15 +90,6 @@ var t;
      }
     });
  
-     $( "#dialog-fail" ).dialog({
-      autoOpen: false,
-      modal:true,
-           buttons: {
-       "确定": function() {
-         $( this ).dialog( "close" );
-       }
-     }
-    });
 
 
     Index.ads = false;
@@ -162,14 +153,13 @@ Index.test=function(){
       creatMask();
           $http.post('http://'+getPath()+'/dezaoshake/Wechat!getPrize.action').success(function(data){
              removeMask();
-             console.log(data);
             if(data.errcode==8400005)  //中奖
             {     
                           if (t.exec()) {
                           var indexprize =  getIndex(Index.prizelist,data.name);
                          t.resp(indexprize, undefined, function() {
-                        
-                          alert("恭喜您,"+data.name+",您还有"+(data.timeleft-1)+"次机会!");
+                          $( "#dialog-success" ).html("<p>"+"恭喜您,"+data.name+",您还有"+(data.timeleft-1)+"次机会!"+"</p>");
+                          $( "#dialog-success" ).dialog( "open" );
                           Index.ads = false;
                           });
                      }
@@ -178,15 +168,16 @@ Index.test=function(){
             {
                           if (t.exec()) {                            
                          t.resp(Index.prizelist.length-1, undefined, function() {
-
-                          alert(data.errmsg.toString()+",您还有"+(data.timeleft-1)+"次机会!");
+                          $( "#dialog-success" ).html("<p>"+data.errmsg.toString()+",您还有"+(data.timeleft-1)+"次机会!"+"</p>");
+                          $( "#dialog-success" ).dialog( "open" );
                           Index.ads = false;
                           });
                      }
             }
             else 
             {
-               alert(data.errmsg); 
+              $( "#dialog-success" ).html("<p>"+data.errmsg+"</p>");
+              $( "#dialog-success" ).dialog( "open" );
                Index.ads = false;
             }
           }).error(function(data,status,headers,config){
@@ -202,6 +193,7 @@ Index.test=function(){
 }
 
 Index.myAlert = function(){
+  $( "#dialog-success" ).html("<p>"+"heihei"+"</p>");
 $( "#dialog-success" ).dialog( "open" );
 }
 
