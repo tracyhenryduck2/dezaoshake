@@ -303,8 +303,8 @@ public class Wechat extends BaseActionSupport{
 			System.out.println("token:"+token);
 			int index = token.indexOf(":");
 			final Long userid = Long.parseLong(token.substring(0, index));
-//			
-			List<Map<String,Object>> prizelist = wechatdao.getPrizeList(18l);
+			
+			List<Map<String,Object>> prizelist = wechatdao.getPrizeList(userid);
 			request.setAttribute("prizelist", prizelist);
 			
 			return "my";

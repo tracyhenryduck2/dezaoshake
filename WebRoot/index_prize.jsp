@@ -125,6 +125,7 @@ String server = request.getServerName();
   <div class="zhongjian"><img src="images/zhongj.png" style="    width: 136px;" alt=""/><marquee    scrollamount="3"  direction="up"  class="imgRadius2_title">
     <p style="width:100%" ng-repeat="map in Index.userlist">{{map.uname}}&nbsp;&nbsp;{{map.phone | phoneFilter}}&nbsp;&nbsp;&nbsp;恭喜获得{{map.money}}元</p>
     </marquee > </div>
+    
 <!--   <div class="guangao1"><img src="images/zhuanzhuan_11.png"  alt=""/></div> -->
 <!--</div>-->
 <!-- 模态框（Modal） -->

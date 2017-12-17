@@ -36,7 +36,7 @@ String path = request.getContextPath();
   <!-- <div class="guangao"><img src="images/zhuanzhuan_01.png"  alt=""/></div> -->
   <div class="logo"><img src="images/left_02.png" style="width:50px;float: left;"><img src="images/logo_02.png"  style="width:200px;" alt=""/><img src="images/right_02.png" style="width:50px;float: right;">
 
-  <img src="images/dezaocode.JPG" style="width:100px;height:100px" />
+  <img src="images/dezaocode.JPG" style="width: 200px;height: 250px;margin-top: 25px;" />
   
   </div>
 
