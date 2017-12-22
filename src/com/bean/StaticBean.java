@@ -14,6 +14,6 @@ public class StaticBean {
 	public static final String AUTHTOKEN="f7c69888b2b94743bf50f7e111edf477";
 	public static final String APPID="aaf98f8952b6f5730152ed9c1f6f3c35";
 	
-	public static final String WECHAT_APPID = "wx76d7af2656e33fa3";
-	public static final String WECHAT_SECRET = "922a325b59945f20aa0c1693fb760589";
+	public static final String WECHAT_APPID = "wxba22766d04f348d9";
+	public static final String WECHAT_SECRET = "80b4aca967e51aaf9048cf8619524550";
 }

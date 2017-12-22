@@ -5,6 +5,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.cloopen.rest.sdk.utils.encoder.BASE64Encoder;
+
 public class MD5 {
 	public static String md5(String str) {
 		String s = str;
@@ -19,7 +21,7 @@ public class MD5 {
 				Logger.getLogger(MD5.class.getName()).log(Level.SEVERE, null,
 						ex);
 			}
-			sun.misc.BASE64Encoder baseEncoder = new sun.misc.BASE64Encoder();
+			BASE64Encoder baseEncoder = new BASE64Encoder();
 			try {
 				value = baseEncoder.encode(md5.digest(s.getBytes("utf-8")));
 			} catch (Exception ex) {
